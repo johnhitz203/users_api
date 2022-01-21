@@ -43,8 +43,27 @@ defmodule UsersApi.User do
   end
 
   def all(args) when args !== %{} do
-    IO.puts "Args is: "
-    IO.inspect(args)
+    args
+    |> Map.keys()
+    |> Enum.reduce(%{}, &(Map.put(&2, &1, args[&1])))
+    |> IO.inspect()
+    |> filter()
+
+    # case Enum.filter(@users, &(&1.preferences === args)) do
+    #   [] -> {:error, %{message: "not found", details: args}}
+    #   users -> {:ok, users}
+    # end
+  end
+  # iex(39)> args1 |> Map.keys |> Enum.reduce(%{}, &(Map.put(&2, &1, args1[&1])))
+  # %{likes_email: true, likes_phone: true}
+  # iex(40)> args
+  # %{likes_email: true}
+  # iex(41)> args |> Map.keys |> Enum.reduce(%{}, &(Map.put(&2, &1, args1[&1])))
+  # %{likes_email: true}
+
+
+  def filter(args) do
+    IO.puts("Args: #{inspect(args)}")
     case Enum.filter(@users, &(&1.preferences === args)) do
       [] -> {:error, %{message: "not found", details: args}}
       users -> {:ok, users}
