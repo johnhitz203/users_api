@@ -42,12 +42,21 @@ defmodule UsersApi.User do
     end
   end
 
-  def all(%{likes_emails: likes_emails, likes_phone_calls: likes_phone_calls}) do
-    case Enum.filter(@users, &(&1.preferences === %{likes_emails: likes_emails, likes_phone_calls: likes_phone_calls})) do
-      [] -> {:error, %{message: "not found", details: %{likes_emails: likes_emails, likes_phone_calls: likes_phone_calls}}}
+  def all(args) when args !== %{} do
+    IO.puts "Args is: "
+    IO.inspect(args)
+    case Enum.filter(@users, &(&1.preferences === args)) do
+      [] -> {:error, %{message: "not found", details: args}}
       users -> {:ok, users}
     end
   end
+
+  # def all(%{likes_emails: likes_emails, likes_phone_calls: likes_phone_calls}) do
+  #   case Enum.filter(@users, &(&1.preferences === %{likes_emails: likes_emails, likes_phone_calls: likes_phone_calls})) do
+  #     [] -> {:error, %{message: "not found", details: %{likes_emails: likes_emails, likes_phone_calls: likes_phone_calls}}}
+  #     users -> {:ok, users}
+  #   end
+  # end
 
   def all(_) do
     {:ok, @users}
