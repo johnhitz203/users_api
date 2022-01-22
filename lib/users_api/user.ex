@@ -42,42 +42,27 @@ defmodule UsersApi.User do
     end
   end
 
-  def all(args) when args !== %{} do
-    args
-    |> Map.keys()
-    |> Enum.reduce(%{}, &(Map.put(&2, &1, args[&1])))
-    |> IO.inspect()
-    |> filter()
+  def all(args) do
+    list_of_keys = Map.keys(args)
 
-    # case Enum.filter(@users, &(&1.preferences === args)) do
-    #   [] -> {:error, %{message: "not found", details: args}}
-    #   users -> {:ok, users}
-    # end
-  end
-  # iex(39)> args1 |> Map.keys |> Enum.reduce(%{}, &(Map.put(&2, &1, args1[&1])))
-  # %{likes_email: true, likes_phone: true}
-  # iex(40)> args
-  # %{likes_email: true}
-  # iex(41)> args |> Map.keys |> Enum.reduce(%{}, &(Map.put(&2, &1, args1[&1])))
-  # %{likes_email: true}
-
-
-  def filter(args) do
-    IO.puts("Args: #{inspect(args)}")
-    case Enum.filter(@users, &(&1.preferences === args)) do
-      [] -> {:error, %{message: "not found", details: args}}
-      users -> {:ok, users}
+    case list_of_keys do
+      [:likes_emails, :likes_phone_calls] ->
+        case Enum.filter(@users, &(&1.preferences === args)) do
+          [] -> {:error, %{message: "not found", details: args}}
+          users -> {:ok, users}
+        end
+      [:likes_emails] ->
+        case Enum.filter(@users, &(&1.preferences.likes_emails === args.likes_emails)) do
+          [] -> {:error, %{message: "not found", details: args}}
+          users -> {:ok, users}
+        end
+      [:likes_phone_calls] ->
+        case Enum.filter(@users, &(&1.preferences.likes_phone_calls === args.likes_phone_calls)) do
+          [] -> {:error, %{message: "not found", details: args}}
+          users -> {:ok, users}
+        end
+      [] ->
+        {:ok, @users}
     end
-  end
-
-  # def all(%{likes_emails: likes_emails, likes_phone_calls: likes_phone_calls}) do
-  #   case Enum.filter(@users, &(&1.preferences === %{likes_emails: likes_emails, likes_phone_calls: likes_phone_calls})) do
-  #     [] -> {:error, %{message: "not found", details: %{likes_emails: likes_emails, likes_phone_calls: likes_phone_calls}}}
-  #     users -> {:ok, users}
-  #   end
-  # end
-
-  def all(_) do
-    {:ok, @users}
   end
 end
