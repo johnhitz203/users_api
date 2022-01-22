@@ -65,4 +65,10 @@ defmodule UsersApi.User do
         {:ok, @users}
     end
   end
+
+  def update(id, params) do
+    with {:ok, user} <- find(%{id: id}) do
+      {:ok, Map.merge(user, params)}
+    end
+  end
 end

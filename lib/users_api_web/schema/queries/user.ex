@@ -8,11 +8,11 @@ defmodule UsersApiWeb.Schema.Queries.User do
     Returns a user or an error with an id: in the datails field and 'not found'
     in the message field if no user is found.
 
-    Query with: /n
-    query {
-      user(id: id) {
-        fields...
-      }
+    Query with: \n
+    query { \n
+       \t user(id: id) { \n
+        \t \t fields... \n
+      \t \t} \n
     }
     """
     field :user, :user do
