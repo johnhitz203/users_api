@@ -71,4 +71,11 @@ defmodule UsersApi.User do
       {:ok, Map.merge(user, params)}
     end
   end
+
+  def update_user_preferences(id, params) do
+    with {:ok, user} <- find(%{id: id}) do
+      # {:ok, Map.merge(user.preferences, params)}
+      {:ok, %{id: 1, likes_emails: false, likes_phone_calls: true}}
+    end
+  end
 end
