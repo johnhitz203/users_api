@@ -9,7 +9,8 @@ defmodule UsersApi.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
-      UsersApiWeb.Endpoint
+      UsersApiWeb.Endpoint,
+      {Absinthe.Subscription, [UsersApiWeb.Endpoint]}
       # Starts a worker by calling: UsersApi.Worker.start_link(arg)
       # {UsersApi.Worker, arg},
     ]

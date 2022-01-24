@@ -1,8 +1,10 @@
 defmodule UsersApiWeb.UserSocket do
   use Phoenix.Socket
+  use Absinthe.Phoenix.Socket, schema: UsersApiWeb.Schema
 
   ## Channels
   # channel "room:*", UsersApiWeb.RoomChannel
+  channel "users:*", UsersApiWeb.UserChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

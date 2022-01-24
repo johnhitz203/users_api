@@ -12,7 +12,8 @@ defmodule UsersApiWeb.Router do
       schema: UsersApiWeb.Schema
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
+      interface: :playground,
       schema: UsersApiWeb.Schema,
-      interface: :playground
+      socket: UsersApiWeb.UserSocket
   end
 end
