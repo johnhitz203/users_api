@@ -3,7 +3,6 @@ defmodule UsersApiWeb.Schema.Mutations.User do
 
   alias UsersApiWeb.Resolvers
 
-  # @desc
   object :user_mutations do
     field :update_user, :user do
       arg :id, non_null(:id)

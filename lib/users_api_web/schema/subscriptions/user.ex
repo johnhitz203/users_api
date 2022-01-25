@@ -22,7 +22,5 @@ defmodule UsersApiWeb.Schema.Subscriptions.User do
         {:ok, topic: "updated preferences"}
       end
     end
-
-
   end
 end

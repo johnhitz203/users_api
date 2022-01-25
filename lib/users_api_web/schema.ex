@@ -17,16 +17,4 @@ defmodule UsersApiWeb.Schema do
   subscription do
     import_fields :user_subscriptions
   end
-
-  # subscription do
-  #   field :user_created, :user do
-  #     trigger :create_user, topic: fn _ ->
-  #       "new_user"
-  #     end
-  #
-  #     config fn _, _ ->
-  #       {:ok, topic: "new_user"}
-  #     end
-  #   end
-  # end
 end
