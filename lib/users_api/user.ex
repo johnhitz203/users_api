@@ -43,26 +43,9 @@ defmodule UsersApi.User do
   end
 
   def all(args) do
-    list_of_keys = Map.keys(args)
-
-    case list_of_keys do
-      [:likes_emails, :likes_phone_calls] ->
-        case Enum.filter(@users, &(&1.preferences === args)) do
-          [] -> {:error, %{message: "not found", details: args}}
-          users -> {:ok, users}
-        end
-      [:likes_emails] ->
-        case Enum.filter(@users, &(&1.preferences.likes_emails === args.likes_emails)) do
-          [] -> {:error, %{message: "not found", details: args}}
-          users -> {:ok, users}
-        end
-      [:likes_phone_calls] ->
-        case Enum.filter(@users, &(&1.preferences.likes_phone_calls === args.likes_phone_calls)) do
-          [] -> {:error, %{message: "not found", details: args}}
-          users -> {:ok, users}
-        end
-      [] ->
-        {:ok, @users}
+    case Enum.filter(@users, &(Map.take(&1.preferences, Map.keys(args)) === args)) do
+      [] -> {:error, %{message: "not found", details: args}}
+      users -> {:ok, users}
     end
   end
 
